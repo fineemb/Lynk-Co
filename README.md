@@ -4,14 +4,14 @@
  * @Description   : 
  * @Date          : 2020-08-26 16:20:12
  * @LastEditors   : fineemb
- * @LastEditTime  : 2020-10-12 02:36:47
+ * @LastEditTime  : 2020-10-12 02:59:03
 -->
 
 # Lynk&Co
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
 
-![](https://img10.360buyimg.com/n1/jfs/t1/82532/23/12714/184458/5da1aba2E0a5e779b/9d6318682f78a2f8.png)
+![](https://ossdopimg.lynkco.com/2019062107415841947850.png)
 
 The Lynk&Co integration offers integration with the Lynk&Co cloud service and provides presence detection as well as sensors such as  state and temperature.
 
