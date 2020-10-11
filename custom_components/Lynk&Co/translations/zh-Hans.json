@@ -28,11 +28,5 @@
                 "description": "设置数据更新的时间间隔"
             }
         }
-    },
-    "state": {
-        "lynkco_car":{
-            "KEY_INSERTED":"在车内",
-            "NO_KEY_INSERTED":"不在车内"
-        }
     }
 }

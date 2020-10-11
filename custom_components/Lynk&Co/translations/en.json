@@ -1,38 +1,32 @@
 {
     "config": {
-        "title": "领克",
+        "title": "Lynk&Co",
         "step": {
             "user": {
-                "title": "领克",
-                "description": "领克车辆互联,如果您需要配置方面的帮助，请查看此处: https://github.com/fineemb/Lynk-Co",
+                "title": "Lynk&Co",
+                "description": "If you need help with the configuration have a look here: https://github.com/fineemb/Lynk-Co",
                 "data": {
-                    "password": "密码",
-                    "username": "账号"
+                    "password": "Password",
+                    "username": "Username"
                 }
             }
         },
         "error": {
-            "login_url_failed": "登录失败"
+            "login_url_failed": "Login failed"
         },
         "abort": {
-            "single_instance_allowed": "仅允许单个配置.",
-            "already_configured": "请勿重复配置."
+            "single_instance_allowed": "Only a single configuration of Lynk&Co is allowed.",
+            "already_configured": "This is already configured."
         }
     },
     "options": {
         "step": {
             "user": {
                 "data": {
-                    "scan_interval": "数据更新时间间隔(秒)"
+                    "scan_interval": "Scan interval"
                 },
-                "description": "设置数据更新的时间间隔"
+                "description": "Scan interval"
             }
-        }
-    },
-    "state": {
-        "lynkco_car":{
-            "KEY_INSERTED":"在车内",
-            "NO_KEY_INSERTED":"不在车内"
         }
     }
 }
