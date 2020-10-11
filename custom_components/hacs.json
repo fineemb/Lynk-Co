@@ -1,0 +1,6 @@
+{
+    "name": "Lynk&Co",
+    "domains": ["device_tracker","sensor","binary_sensor"],
+    "render_readme": true,
+    "homeassistant": "0.107"
+  }
