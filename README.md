@@ -4,7 +4,7 @@
  * @Description   : 
  * @Date          : 2020-08-26 16:20:12
  * @LastEditors   : fineemb
- * @LastEditTime  : 2020-10-12 02:30:55
+ * @LastEditTime  : 2020-10-12 02:36:47
 -->
 
 # Lynk&Co
@@ -14,6 +14,11 @@
 ![](https://img10.360buyimg.com/n1/jfs/t1/82532/23/12714/184458/5da1aba2E0a5e779b/9d6318682f78a2f8.png)
 
 The Lynk&Co integration offers integration with the Lynk&Co cloud service and provides presence detection as well as sensors such as  state and temperature.
+
+Support 60+ sensors
+
+Support remote control
+
 This integration provides the following platforms:
   + Binary sensors - Seat belt status, Door open status, Tyre pre warning
   + Sensors - Key status,Engine status,Speed...
