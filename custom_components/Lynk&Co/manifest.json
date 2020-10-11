@@ -1,0 +1,10 @@
+{
+  "domain": "lynkco",
+  "name": "lynkco",
+  "documentation": "https://github.com/fineemb/Lynk-Co",
+  "issue_tracker": "https://github.com/fineemb/Lynk-Co/issues",
+  "dependencies": [],
+  "config_flow": true,
+  "codeowners": ["@fineemb"],
+  "requirements": []
+}

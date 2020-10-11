@@ -1,0 +1,46 @@
+# #############################################################################
+#   @Author        : fineemb
+#   @Github        : https://github.com/fineemb
+#   @Description   : 
+#   @Date          : 2019-09-07 02:58:01
+#   @LastEditors   : fineemb
+#   @LastEditTime  : 2020-10-12 00:14:21
+# #############################################################################
+
+
+hlf:
+  description: 闪灯鸣笛。
+  fields:
+    entity_id:
+      description: 车辆 device_tracker 实体
+      example: 'device_tracker.cx11_csp_001'
+    value:
+      description: 闪灯鸣笛选项, 可选值(horn-light-flash,light-flash,horn-flash)
+      example: 'horn-light-flash'
+unlock:
+  description: 车辆解锁。
+  fields:
+    entity_id:
+      description: 车辆 device_tracker 实体
+      example: 'device_tracker.cx11_csp_001'
+    value:
+      description: 车辆解锁时长(分钟), 可选值(1-3), 默认1
+      example: 1
+lock:
+  description: 车辆上锁。
+  fields:
+    entity_id:
+      description: 车辆 device_tracker 实体
+      example: 'device_tracker.cx11_csp_001'
+stop:
+  description: 车辆熄火。
+  fields:
+    entity_id:
+      description: 车辆 device_tracker 实体
+      example: 'device_tracker.cx11_csp_001'
+start:
+  description: 车辆启动。
+  fields:
+    entity_id:
+      description: 车辆 device_tracker 实体
+      example: 'device_tracker.cx11_csp_001'
