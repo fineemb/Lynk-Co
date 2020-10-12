@@ -4,12 +4,13 @@
  * @Description   : 
  * @Date          : 2020-08-26 16:20:12
  * @LastEditors   : fineemb
- * @LastEditTime  : 2020-10-12 03:07:21
+ * @LastEditTime  : 2020-10-12 09:47:49
 -->
 
 # Lynk&Co
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+
 
 ![](https://dm30webimages.lynkco.com.cn/LynkCoPortal/Files/Cars/01/36001/710/JIN/r/3.png)
 
@@ -81,3 +82,5 @@ Flashing lights and whistle
 |---------|------|----|
 |`entity_id`   | Required | Vehicle Device tracker entity|
 |`value`   | Required | Flashing lights and whistle options( horn-light-flash,light-flash,horn-flash )|
+
+<a href="https://www.buymeacoffee.com/fineemb" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-orange.png" alt="Buy Me A Coffee" style="height: 50px !important;" ></a>
