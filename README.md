@@ -9,7 +9,7 @@
 
 # Lynk&Co
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
 
 
 ![01](https://dm30webimages.lynkco.com.cn/LynkCoPortal/Files/Cars/01/36001/710/JIN/r/3.png)
