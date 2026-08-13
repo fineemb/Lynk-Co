@@ -1,33 +1,19 @@
 
 """Support for the Xiaomi device tracking."""
 import logging
-import datetime
-import time
 
-from homeassistant.components.device_tracker import SOURCE_TYPE_GPS
-from homeassistant.components.device_tracker.config_entry import TrackerEntity
-from homeassistant.const import (
-    ATTR_BATTERY_LEVEL,
-    ATTR_GPS_ACCURACY,
-    ATTR_LATITUDE,
-    ATTR_LONGITUDE,
-)
-from homeassistant.core import callback
-from homeassistant.helpers import device_registry
-from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.components.device_tracker import SourceType, TrackerEntity
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.restore_state import RestoreEntity
-from homeassistant.helpers.typing import HomeAssistantType
-from homeassistant.helpers.entity import Entity
 
 from .const import (
-    DOMAIN,
     COORDINATOR,
-    SIGNAL_STATE_UPDATED
+    DOMAIN,
 )
 
 _LOGGER = logging.getLogger(__name__)
 
-async def async_setup_entry(hass: HomeAssistantType, config_entry, async_add_entities):
+async def async_setup_entry(hass: HomeAssistant, config_entry, async_add_entities):
     """Configure a dispatcher connection based on a config entry."""
 
     coordinator = hass.data[DOMAIN][config_entry.entry_id][COORDINATOR]
@@ -37,7 +23,7 @@ async def async_setup_entry(hass: HomeAssistantType, config_entry, async_add_ent
         _LOGGER.debug("device is : %s", i)
     async_add_entities(devices, True)
 
-class LynkCOEntity(TrackerEntity, RestoreEntity, Entity):
+class LynkCOEntity(TrackerEntity, RestoreEntity):
     """Represent a tracked device."""
 
     def __init__(self, hass, coordinator, vin) -> None:
@@ -68,7 +54,7 @@ class LynkCOEntity(TrackerEntity, RestoreEntity, Entity):
         )
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return device specific attributes."""
         updateTime = self.coordinator.data[self._vin]["vehicleStatus"]['updateTime']
         attrs = {
@@ -122,7 +108,7 @@ class LynkCOEntity(TrackerEntity, RestoreEntity, Entity):
     @property
     def source_type(self):
         """Return the source type, eg gps or router, of the device."""
-        return SOURCE_TYPE_GPS
+        return SourceType.GPS
 
         
 

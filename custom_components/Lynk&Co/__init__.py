@@ -4,34 +4,28 @@ Component to integrate with xiaomi cloud.
 For more details about this component, please refer to
 https://github.com/fineemb/xiaomi-cloud
 """
-import asyncio
-import json
 import datetime
-import time
-import logging
-import re
-import base64
 import hashlib
+import json
+import logging
+import time
 
-import async_timeout
 import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
 
-from urllib import parse
 from aiohttp.client_exceptions import ClientConnectorError
+from homeassistant.const import (
+    ATTR_ENTITY_ID,
+    CONF_PASSWORD,
+    CONF_SCAN_INTERVAL,
+    CONF_USERNAME,
+)
 from homeassistant.core import Config, HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from homeassistant.components.device_tracker import (
-    ATTR_BATTERY,
-    DOMAIN as DEVICE_TRACKER,
-)
-from homeassistant.const import (
-    CONF_PASSWORD,
-    CONF_USERNAME,
-    CONF_SCAN_INTERVAL,
-    ATTR_ENTITY_ID
+from homeassistant.helpers.update_coordinator import (
+    DataUpdateCoordinator,
+    UpdateFailed,
 )
 
 from .const import (
@@ -82,11 +76,9 @@ async def async_setup_entry(hass, config_entry) -> bool:
         COORDINATOR: coordinator,
         UNDO_UPDATE_LISTENER: undo_listener,
     }
-    for component in LYNKCO_COMPONENT:
-        _LOGGER.debug("Loading %s", component)
-        hass.async_create_task(
-            hass.config_entries.async_forward_entry_setup(config_entry, component)
-        )
+    await hass.config_entries.async_forward_entry_setups(
+        config_entry, LYNKCO_COMPONENT
+    )
 
     async def services(call):
         """Handle the service call."""
@@ -115,13 +107,8 @@ async def async_setup_entry(hass, config_entry) -> bool:
 
 async def async_unload_entry(hass, config_entry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                hass.config_entries.async_forward_entry_unload(config_entry, component)
-                for component in LYNKCO_COMPONENT
-            ]
-        )
+    unload_ok = await hass.config_entries.async_unload_platforms(
+        config_entry, LYNKCO_COMPONENT
     )
     hass.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
 
@@ -306,7 +293,6 @@ class LynkCoDataUpdateCoordinator(DataUpdateCoordinator):
                 return False
         return redata
 
-    @asyncio.coroutine
     async def _async_update_data(self):
         """Update data via library."""
         try:

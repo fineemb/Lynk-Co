@@ -1,11 +1,8 @@
 """Support for the Colorfulclouds service."""
 import logging
-import string
+
 from homeassistant.const import (
-    ATTR_ATTRIBUTION,
     ATTR_DEVICE_CLASS,
-    CONF_NAME,
-    DEVICE_CLASS_TEMPERATURE,
 )
 from homeassistant.helpers.entity import Entity
 
@@ -17,7 +14,6 @@ from .const import (
     ATTR_FRIENDLY_NAME,
     COORDINATOR,
     DOMAIN,
-    NAME,
     OPTIONAL_SENSORS,
     SENSOR_TYPES,
 )
@@ -126,7 +122,7 @@ class LynkCoSensor(Entity):
         return SENSOR_TYPES[self.kind][self._unit_system]
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         if self.kind == 'mainBatteryStatus':
             self._attrs["stateOfCharge"] =  self.coordinator.data[self.vin]["vehicleStatus"]['additionalVehicleStatus']['maintenanceStatus'][self.kind]['stateOfCharge']

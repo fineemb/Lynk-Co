@@ -1,14 +1,10 @@
 """Support for the Colorfulclouds service."""
 import logging
-import string
+
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.const import (
-    ATTR_ATTRIBUTION,
     ATTR_DEVICE_CLASS,
-    CONF_NAME,
-    DEVICE_CLASS_TEMPERATURE,
 )
-from homeassistant.helpers.entity import Entity
 
 from .const import (
     ATTR_ICON,
@@ -18,7 +14,6 @@ from .const import (
     ATTR_FRIENDLY_NAME,
     COORDINATOR,
     DOMAIN,
-    NAME,
     OPTIONAL_SENSORS,
     BINARY_SENSOR_TYPES,
 )
@@ -119,7 +114,7 @@ class LynkCoBinarySensor(BinarySensorEntity):
 
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         self._attrs["friendly_name"] = BINARY_SENSOR_TYPES[self.kind][ATTR_FRIENDLY_NAME]
         return self._attrs

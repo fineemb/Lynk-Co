@@ -1,22 +1,20 @@
 
 """Adds config flow for Colorfulclouds."""
-import logging
-import json
 import hashlib
-import voluptuous as vol
-from urllib import parse
+import json
+import logging
 from collections import OrderedDict
-from homeassistant.helpers import aiohttp_client, config_validation as cv
-from homeassistant.const import CONF_NAME
 
-from homeassistant import config_entries, core, exceptions
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from homeassistant.core import callback
+import voluptuous as vol
+
+from homeassistant import config_entries
 from homeassistant.const import (
     CONF_PASSWORD,
     CONF_SCAN_INTERVAL,
     CONF_USERNAME,
 )
+from homeassistant.core import callback
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import (
     DOMAIN
@@ -26,8 +24,7 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
-@config_entries.HANDLERS.register(DOMAIN)
-class LynkcolowHandler(config_entries.ConfigFlow, domain=DOMAIN):
+class LynkcoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     @staticmethod
     @callback
     def async_get_options_flow(config_entry):
@@ -41,35 +38,32 @@ class LynkcolowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         self._password = None
         self._headers = {}
 
-    async def async_step_user(self, user_input={}):
+    async def async_step_user(self, user_input=None):
         self._errors = {}
-        if user_input is not None:
-            # Check if entered host is already in HomeAssistant
-            existing = await self._check_existing(user_input[CONF_USERNAME])
-            if existing:
-                return self.async_abort(reason="already_configured")
-
-            # If it is not, continue with communication test
-            self._user = user_input[CONF_USERNAME]
-            self._password = user_input[CONF_PASSWORD]
-            session = async_get_clientsession(self.hass)  
-            try:
-                session.cookie_jar.clear()
-                tmp = await self._login_lynkco(session)
-                if not tmp:
-                    _LOGGER.warning("login lynkco Failed")
-                    self._errors["base"] = "login_url_failed"
-                    return await self._show_config_form(user_input)
-                else:
-                    return self.async_create_entry(
-                        title=user_input[CONF_USERNAME], data=user_input
-                    )
-                return True
-            except BaseException as e:
-                _LOGGER.warning(e.args[0])
-                return False
+        if user_input is None:
             return await self._show_config_form(user_input)
-        return await self._show_config_form(user_input)
+
+        # Check if entered username is already configured
+        existing = await self._check_existing(user_input[CONF_USERNAME])
+        if existing:
+            return self.async_abort(reason="already_configured")
+
+        self._user = user_input[CONF_USERNAME]
+        self._password = user_input[CONF_PASSWORD]
+        session = async_get_clientsession(self.hass)
+        try:
+            session.cookie_jar.clear()
+            if not await self._login_lynkco(session):
+                _LOGGER.warning("login lynkco Failed")
+                self._errors["base"] = "login_url_failed"
+                return await self._show_config_form(user_input)
+            return self.async_create_entry(
+                title=user_input[CONF_USERNAME], data=user_input
+            )
+        except Exception as e:
+            _LOGGER.warning("Unexpected error during login: %s", e)
+            self._errors["base"] = "login_url_failed"
+            return await self._show_config_form(user_input)
     async def _login_lynkco(self, session):
         url = 'https://api.xchanger.cn/api/v1/user/login'
         self._headers['Content-Type'] = 'application/x-www-form-urlencoded'
@@ -111,9 +105,9 @@ class LynkcolowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         return self.async_create_entry(title="configuration.yaml", data={})
 
-    async def _check_existing(self, host):
+    async def _check_existing(self, username):
         for entry in self._async_current_entries():
-            if host == entry.data.get(CONF_NAME):
+            if username == entry.data.get(CONF_USERNAME):
                 return True
 
 class LynkcoOptionsFlow(config_entries.OptionsFlow):
